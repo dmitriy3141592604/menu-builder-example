@@ -22,6 +22,8 @@ public class Window implements Runnable {
 		fa.commandRegistry(newCommandRegistry());
 		fa.context(new ApplicationContext());
 
+		fa.statusBar("Строка состояния");
+
 		final JFrame frame = fa.build();
 
 		frame.setVisible(true);

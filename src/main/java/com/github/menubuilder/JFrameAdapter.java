@@ -1,11 +1,19 @@
 package com.github.menubuilder;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.util.function.Consumer;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import com.github.typemarkup.Responsibility;
 
@@ -28,6 +36,8 @@ public class JFrameAdapter {
 
 	private ApplicationContext context;
 
+	private String statusBarText;
+
 	public JFrameAdapter(JFrame frame) {
 		this.frame = frame;
 	}
@@ -48,6 +58,13 @@ public class JFrameAdapter {
 			}
 			// TODO Проверить на null
 			menuBarBuilder.accept(new JMenuBarBuilder<ApplicationContext>(menuBar, new WindowLabelResolver(), commandRegistry, context));
+		}
+		if (statusBarText != null && !"".equals(statusBarText.trim())) {
+			final JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			statusBar.setBorder(new CompoundBorder(new LineBorder(Color.DARK_GRAY), new EmptyBorder(4, 4, 4, 4)));
+			final JLabel status = new JLabel(statusBarText);
+			statusBar.add(status);
+			frame.add(statusBar, BorderLayout.SOUTH);
 		}
 		return frame;
 	}
@@ -85,6 +102,10 @@ public class JFrameAdapter {
 	public JFrameAdapter context(ApplicationContext applicationContext) {
 		this.context = applicationContext;
 		return this;
+	}
+
+	public void statusBar(String statusBarText) {
+		this.statusBarText = statusBarText;
 	}
 
 }
