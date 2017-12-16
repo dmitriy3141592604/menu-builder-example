@@ -1,0 +1,55 @@
+<configuration>
+	<!-- http://saltnlight5.blogspot.ru/2013/08/how-to-configure-slf4j-with-different.html -->
+	<!-- https://logback.qos.ch/manual/appenders.html -->
+	<!-- Таблица с кодами pattern https://logback.qos.ch/manual/layouts.html -->
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<!-- %d{HH:mm:ss.SSS} [%thread] -->
+			<!--
+				<pattern>%-5level %-17logger{0} %msg%n</pattern>
+			-->
+			<pattern>%-20logger{0} %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>project-debug-log.log</file>
+		<append>false</append>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS+Z} [%thread] %-5level %logger - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="notRegistredLabelsJavaCodeFile" class="ch.qos.logback.core.FileAppender">
+		<file>notRegistredLabelsJavaCode.txt</file>
+		<append>false</append>
+		<encoder>
+			<pattern>%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="notExistsCommandJavaCodeFile" class="ch.qos.logback.core.FileAppender">
+		<file>notExistsCommandJavaCode.txt</file>
+		<append>false</append>
+		<encoder>
+			<pattern>%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="test.swing.layout.spring" level="DEBUG">
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<logger name="notRegistredLabelsJavaCode" level="DEBUG">
+		<appender-ref ref="notRegistredLabelsJavaCodeFile" />
+	</logger>
+
+	<logger name="notExistsCommandJavaCode" level="DEBUG">
+		<appender-ref ref="notExistsCommandJavaCodeFile" />
+	</logger>
+
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
